@@ -14,10 +14,16 @@ https://securityguide.github.io/webapps/tools/python-tools/python-dependency-che
 
 ________________________________________________________
 
+TEST CASES: 
+    1. File with name "Requirements" , "Requirement", "requirements", and "requirement"
+
 
 Follow best practices 
     1. write envs 
     2. write doc string and type hinting 
     3. Create a CLI of it and exe
-    4. Create Fast API of it 
-    5. create a package of it 
+    4. Write Pytest , testcases
+    5. Logging
+    6. Create Fast API of it 
+    7. NginX and Guicorn for FastAPI
+    8. create a package of it 

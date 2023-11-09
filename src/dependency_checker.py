@@ -26,6 +26,7 @@ def create_directory(zip_file_name:str)-> bool:
         os.makedirs(os.path.join(config("uploadPath"), zip_file_name), exist_ok=True)
         return True
     except: 
+        # TODO: Log -C- Folder not created, maybe because of write permissions  
         # Due to write permissions
         return False
 
@@ -53,18 +54,17 @@ def check_type(upload) -> bool:
 
 
 def get_name_n_extension(path:str) -> Tuple[str,str]: 
-    return pathlib.Path.stem, pathlib.Path.suffix
+    return pathlib.Path(path).stem, pathlib.Path(path).suffix
     
 
 
 def get_files_paths(root:list,file_names:list)-> List[int]:
-    # os.path.join(root,file_names)
+    return os.path.join(root,file_names)
     # completePath = []
     # for index, files_name in enumerate(file_names):
     # # Getting complete path of all the files in the directory
     #     completePath.append(os.path.join(root[index], files_name))
-    return [os.path.join(root[index], file_name) for index, file_name in enumerate(file_names)]
-    # return completePath
+    # return [os.path.join(root[index], file_name) for index, file_name in enumerate(file_names)]
 
 def parse_files(path:str) -> Tuple[List[int], List[int]]:
     file_paths = [] 
@@ -82,8 +82,8 @@ def parse_files(path:str) -> Tuple[List[int], List[int]]:
     return file_paths,file_names
 
 
-def filter_requirements_files() -> bool: 
-    return True if pathlib.Path.suffix == '.txt' else False
+def filter_requirements_files(filePath) -> bool: 
+    return True if pathlib.Path(filePath).suffix == '.txt' and ("requirements" or "requirement") in pathlib.Path(filePath).stem.lower()  else False
     
 
 def read_packages(data):
@@ -94,9 +94,13 @@ def read_packages(data):
 
 def aggregator(input):
     if check_type(input):
-        # paths, names = parse_files(input)
-        # files_paths = get_files_paths(paths,names)
-        # name_n_extensions = map(get_name_n_extension,files_paths)
+        paths, names = parse_files(input)
+        files_paths = list(map(get_files_paths,paths,names))
+        # print(files_paths)
+        req_files = list(filter(filter_requirements_files,files_paths))
+        # print(req_files)
+        requirements = list(map(read_file,req_files))
+        print(requirements)
         # requirements_files = map(filter_requirements_files,files_paths)
         print("THIS IS FOLDER")
 
@@ -106,5 +110,5 @@ def aggregator(input):
 
 
 if __name__ == "__main__":
-    input = r"D:\2022\Python-DCV\test_data\test_directory_1.zip"
+    input = r"D:\2022\Python-DCV\test_data\test_directory_1"
     aggregator(input)
