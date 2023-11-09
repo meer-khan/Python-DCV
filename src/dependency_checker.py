@@ -3,15 +3,49 @@ import json
 import pathlib
 
 
-packages = {}
+packages = []
 
 
 
 def read_file():
-    with open("../test_data/requirements.txt", 'r',encoding='utf-8', errors='ignore') as file: 
-        lines = file.read()
-        print(lines)
-        print(type(lines))
+    data = ''
+    with open("../test_data/requirements_1.txt", 'r',encoding='utf-8', errors='ignore') as file: 
+        data = file.read()
+        print(data)
+        print(type(data))
+    return data 
+
+
+
+data = read_file()
+
+splitted_data = data.split("\n")
+non_version_packages = set()
+# l1 = []
+# l2 = []
+# for i in splitted_data:
+#     if "==" in i:
+#         l1.append(i.split("=="))
+#     else: 
+#         non_version_packages.add(i)
+    
+#     for i in l1: 
+#         l2.append({i[0]:i[1]} )
+# print("_____________________l1_________________")
+# print(l1)
+# print("_____________________l2_________________")
+# print(l2)
+
+packages = [{i[0]:i[1]} for i in [i.split("==") if "==" in i else non_version_packages.add(i) for i in splitted_data] if i is not None]
+# print([i.split("==") if "==" in i else non_version_packages.append(i) for i in splitted_data])
+# l2, non_version_packages = ([i[0]: i[1] for i in item.split("==")] for item in splitted_data if "==" in item), [item for item in splitted_data if "==" not in item]
+
+print("################# PACKAGES #########################")
+print(packages)
+print("################# NO VERSION #########################")
+print(non_version_packages)
+    
+
 
 
 
