@@ -25,7 +25,7 @@ def unzip(path, newDir):
         print('Extracting Files: ' + newDir)
         zip.extractall(newDir)
 
-def check_type(upload):
+def check_type(upload) -> bool:
     return True if os.path.isdir(upload) else False
 
 
@@ -58,8 +58,9 @@ def parse_files(path:str) -> Tuple(List[int], List[int]):
     return file_paths,file_names
 
 
-def filter_requirements_files(): 
-    pass
+def filter_requirements_files() -> bool: 
+    return True if pathlib.Path.suffix == '.txt' else False
+    
 
 def read_packages(data):
     splitted_data = data.split("\n")
