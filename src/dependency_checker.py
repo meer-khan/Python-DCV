@@ -22,28 +22,30 @@ def unzip(path, newDir):
         # if extractedDirPath == None : 
             # newDir,zipProjectName = making_new_DIR(folderName , filePath)
             # extracting files at default location
-        print('Extracting all the files at: ' + newDir)
+        print('Extracting Files: ' + newDir)
         zip.extractall(newDir)
 
 def check_type(upload):
     return True if os.path.isdir(upload) else False
 
-def get_name_n_extension(): 
-    file_name = pathlib.Path.stem
-    pass
+
+def get_name_n_extension(path) -> Tuple(str,str): 
+    return pathlib.Path.stem, pathlib.Path.suffix
+    
 
 
-def get_all_files_paths(root:list,file_names:list)-> List[int]:
-    completePath = []
-    for index, files_name in enumerate(file_names):
-    # Getting complete path of all the files in the directory
-        completePath.append(os.path.join(root[index], files_name))
-
-    return completePath
+def get_files_paths(root:list,file_names:list)-> List[int]:
+    # completePath = []
+    # for index, files_name in enumerate(file_names):
+    # # Getting complete path of all the files in the directory
+    #     completePath.append(os.path.join(root[index], files_name))
+    return [os.path.join(root[index], file_name) for index, file_name in enumerate(file_names)]
+    # return completePath
 
 def parse_files(path:str) -> Tuple(List[int], List[int]):
     file_paths = [] 
     file_names = [] 
+
     for root, dirs, files in os.walk(path):
         for filename in files:
             file_paths.append(root)
@@ -56,7 +58,7 @@ def parse_files(path:str) -> Tuple(List[int], List[int]):
     return file_paths,file_names
 
 
-def get_requirements_files(): 
+def filter_requirements_files(): 
     pass
 
 def read_packages(data):
@@ -68,7 +70,7 @@ def read_packages(data):
 def aggregator(input):
     if check_type(input):
         paths, names = parse_files(input)
-        requirements_files = map(get_requirements_files,paths)
+        requirements_files = map(filter_requirements_files,paths)
 
     else:
         pass
