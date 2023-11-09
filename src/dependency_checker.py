@@ -18,6 +18,9 @@ def read_file():
 def unzip():
     pass
 
+def check_type(upload):
+    return True if os.path.isdir(upload) else False
+
 def get_extension(): 
     pass
 
@@ -34,9 +37,19 @@ def read_packages(data):
     return packages
 
 def aggregator():
+    if check_type(input):
+        files = parse_files(input)
+        requirements_files = map(get_requirements_files,files)
+        
+    else:
+        pass
     # data = read_file()
     print("################# PACKAGES #########################")
     # print(packages)
     print("################# NO VERSION #########################")
     # print(non_version_packages)
 
+
+if __name__ == "__main__":
+    input = ""
+    aggregator(input)
