@@ -1,7 +1,7 @@
 import os 
 import json 
 import pathlib
-
+from typing import Tuple, List
 
 packages = []
 
@@ -24,24 +24,33 @@ def check_type(upload):
 def get_extension(): 
     pass
 
-def parse_files(path):
+
+def get_all_files_paths(root:list,file_names:list)-> List[int]:
+    completePath = []
+    for index, files_name in enumerate(file_names):
+    # Getting complete path of all the files in the directory
+        completePath.append(os.path.join(root[index], files_name))
+
+    return completePath
+
+def parse_files(path:str) -> Tuple(List[int], List[int]):
     file_paths = [] 
     file_names = [] 
     for root, dirs, files in os.walk(path):
         print(f"ROOT: {root}")
         print(f"DIRS: {dirs}")
         print(f"FILES: {files}")
-
+        # file_names.extend(files)
+        # file_paths.append(root)
         for filename in files:
             file_paths.append(root)
             file_names.append(filename)
     
     print("** FILES PATHS**")
     print(file_paths)
-    print("** FILE PATHS **")
+    print("** FILE NAMES **")
     print(file_names)
     return file_paths,file_names
-
 def get_requirements_files(): 
     pass
 
@@ -51,7 +60,7 @@ def read_packages(data):
     packages = [{i[0]:i[1]} for i in [i.split("==") if "==" in i else non_version_packages.add(i) for i in splitted_data] if i is not None]
     return packages
 
-def aggregator():
+def aggregator(input):
     if check_type(input):
         paths, names = parse_files(input)
         requirements_files = map(get_requirements_files,paths)
@@ -66,5 +75,5 @@ def aggregator():
 
 
 if __name__ == "__main__":
-    input = ""
+    input = r"D:\2022\Python-DCV\test_data\test_directory_1"
     aggregator(input)
