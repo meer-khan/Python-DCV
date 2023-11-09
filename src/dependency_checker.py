@@ -2,7 +2,7 @@ import os
 import json 
 import pathlib
 from typing import Tuple, List
-
+import zipfile
 packages = []
 
 
@@ -15,13 +15,21 @@ def read_file():
         print(type(data))
     return data 
 
-def unzip():
-    pass
+def unzip(path, newDir):
+     with zipfile.ZipFile(path, 'r') as zip:
+    # printing all the contents of the zip file
+            # zip.printdir()
+        # if extractedDirPath == None : 
+            # newDir,zipProjectName = making_new_DIR(folderName , filePath)
+            # extracting files at default location
+        print('Extracting all the files at: ' + newDir)
+        zip.extractall(newDir)
 
 def check_type(upload):
     return True if os.path.isdir(upload) else False
 
-def get_extension(): 
+def get_name_n_extension(): 
+    file_name = pathlib.Path.stem
     pass
 
 
@@ -37,20 +45,17 @@ def parse_files(path:str) -> Tuple(List[int], List[int]):
     file_paths = [] 
     file_names = [] 
     for root, dirs, files in os.walk(path):
-        print(f"ROOT: {root}")
-        print(f"DIRS: {dirs}")
-        print(f"FILES: {files}")
-        # file_names.extend(files)
-        # file_paths.append(root)
         for filename in files:
             file_paths.append(root)
             file_names.append(filename)
     
-    print("** FILES PATHS**")
-    print(file_paths)
-    print("** FILE NAMES **")
-    print(file_names)
+    # print("** FILES PATHS**")
+    # print(file_paths)
+    # print("** FILE NAMES **")
+    # print(file_names)
     return file_paths,file_names
+
+
 def get_requirements_files(): 
     pass
 
