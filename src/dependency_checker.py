@@ -3,17 +3,31 @@ import json
 import pathlib
 from typing import Tuple, List
 import zipfile
+import uuid
+from decouple import config
 packages = []
 
 
 
-def read_file():
+def read_file(file:str) -> str:
     data = ''
-    with open("../test_data/requirements_1.txt", 'r',encoding='utf-8', errors='ignore') as file: 
+    with open(file, 'r',encoding='utf-8', errors='ignore') as file: 
         data = file.read()
         print(data)
         print(type(data))
     return data 
+
+def generate_unique_name(file_name:str)-> str:
+    return file_name +  str(uuid.uuid4) 
+
+
+def create_directory(zip_file_name:str)-> bool:
+    try: 
+        os.makedirs(os.path.join(config("uploadPath"), zip_file_name), exist_ok=True)
+        return True
+    except: 
+        # Due to write permissions
+        return False
 
 def unzip(path, newDir):
      with zipfile.ZipFile(path, 'r') as zip:
@@ -26,15 +40,25 @@ def unzip(path, newDir):
         zip.extractall(newDir)
 
 def check_type(upload) -> bool:
+    """
+    Checks if the given input file is a folder or zipped file
+
+    Parameters: 
+        upload: path of uploaded folder/zippedfile
+
+    Return: 
+        'True' if it's folder and 'False' if i'ts zip file
+    """
     return True if os.path.isdir(upload) else False
 
 
-def get_name_n_extension(path) -> Tuple(str,str): 
+def get_name_n_extension(path:str) -> Tuple[str,str]: 
     return pathlib.Path.stem, pathlib.Path.suffix
     
 
 
 def get_files_paths(root:list,file_names:list)-> List[int]:
+    # os.path.join(root,file_names)
     # completePath = []
     # for index, files_name in enumerate(file_names):
     # # Getting complete path of all the files in the directory
@@ -42,7 +66,7 @@ def get_files_paths(root:list,file_names:list)-> List[int]:
     return [os.path.join(root[index], file_name) for index, file_name in enumerate(file_names)]
     # return completePath
 
-def parse_files(path:str) -> Tuple(List[int], List[int]):
+def parse_files(path:str) -> Tuple[List[int], List[int]]:
     file_paths = [] 
     file_names = [] 
 
@@ -70,18 +94,17 @@ def read_packages(data):
 
 def aggregator(input):
     if check_type(input):
-        paths, names = parse_files(input)
-        requirements_files = map(filter_requirements_files,paths)
+        # paths, names = parse_files(input)
+        # files_paths = get_files_paths(paths,names)
+        # name_n_extensions = map(get_name_n_extension,files_paths)
+        # requirements_files = map(filter_requirements_files,files_paths)
+        print("THIS IS FOLDER")
 
     else:
-        pass
-    # data = read_file()
-    print("################# PACKAGES #########################")
-    # print(packages)
-    print("################# NO VERSION #########################")
-    # print(non_version_packages)
+        print("THIS IS ZIP FILE")
+
 
 
 if __name__ == "__main__":
-    input = r"D:\2022\Python-DCV\test_data\test_directory_1"
+    input = r"D:\2022\Python-DCV\test_data\test_directory_1.zip"
     aggregator(input)
