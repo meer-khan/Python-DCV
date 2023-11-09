@@ -1,0 +1,15 @@
+FawltyDeps is a dependency checker for Python that finds undeclared and/or unused 3rd-party dependencies in your Python project. The name is inspired by the Monty Python-adjacent Fawlty Towers sitcom.
+
+undeclared dependency: a package that's used (in particular, imported) by a project and which lacks a corresponding declaration to ensure that it's available. For example, you import numpy, but you've forgotten to include numpy in your requirements.txt. Pragmatically, this means the project is prone to runtime errors.
+unused dependency: a package that's declared as necessary for a project but which is never used by project code. For example, you have numpy listed in your requirements.txt, but you never actually import numpy. Pragmatically, this means that project installation may consume more space than needed and will be more likely to break with future software releases; in short, these are costs paid for no benefit.
+
+https://github.com/tweag/FawltyDeps 
+
+
+
+________________________________________________________
+useful package for vulnerability detection 
+
+https://securityguide.github.io/webapps/tools/python-tools/python-dependency-checker.htmlhttps://securityguide.github.io/webapps/tools/python-tools/python-dependency-checker.html
+
+________________________________________________________
