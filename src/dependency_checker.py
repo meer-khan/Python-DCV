@@ -12,10 +12,11 @@ import sys
 # curr_dir = pathlib.Path(__file__).parent.resolve()
 # sys.path.append(curr_dir)
 sys.path.append("..")
+# print(sys.path)
 print("PATH***************8")
 # print(pathlib.Path(__file__).parent.resolve())
-
-from DC import dependency_checker
+import DC.dependency_checker
+# from DC import dependency_checker
 
 # ANSI
 # UTF-16 LE
