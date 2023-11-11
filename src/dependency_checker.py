@@ -4,31 +4,56 @@ import pathlib
 from typing import Tuple, List
 import zipfile
 import uuid
-from decouple import config
+# from decouple import config
 packages = []
 
+# ANSI
+# UTF-16 LE
+# UTF-16 BE
+# UTF-8 
+# UTF-8 with BOM
+# GIT or maybe VSCode changes the encoding of requirements file so I have added all encodings if one fails other will apply
+def read_file(file:str)-> str:
+    '''
+    Description: 
+        Read the file with appropriate encoding
 
+    Params: 
+        file: path of the file
 
-def read_file(file:str) -> str:
+    Return:
+        returns the content of file is string format
+    '''
     data = ''
-    with open(file, 'r',encoding='utf-8', errors='ignore') as file: 
-        data = file.read()
-        print(data)
-        print(type(data))
-    return data 
+    encodings = ["utf-8", "utf-16 LE" ,"ANSI", ]
+    for encode in encodings:
+        try:
+            with open(file, 'r',encoding=encode) as f: 
+                data = f.read()
+                return data 
+
+        except:
+            print(f)
+            print(f"******************  I AM IN EXCEPT BLOCK FOR FILE {file} with encondings: {encode}  ****************")
+
+            continue
+    
+    # TODO: Log -C- File cannot be read using above encodings
+        # print(data)
+        # print(type(data))
 
 def generate_unique_name(file_name:str)-> str:
     return file_name +  str(uuid.uuid4) 
 
 
-def create_directory(zip_file_name:str)-> bool:
-    try: 
-        os.makedirs(os.path.join(config("uploadPath"), zip_file_name), exist_ok=True)
-        return True
-    except: 
-        # TODO: Log -C- Folder not created, maybe because of write permissions  
-        # Due to write permissions
-        return False
+# def create_directory(zip_file_name:str)-> bool:
+#     try: 
+#         os.makedirs(os.path.join(config("uploadPath"), zip_file_name), exist_ok=True)
+#         return True
+#     except: 
+#         # TODO: Log -C- Folder not created, maybe because of write permissions  
+#         # Due to write permissions
+#         return False
 
 def unzip(path, newDir):
      with zipfile.ZipFile(path, 'r') as zip:
@@ -98,10 +123,18 @@ def aggregator(input):
         files_paths = list(map(get_files_paths,paths,names))
         # print(files_paths)
         req_files = list(filter(filter_requirements_files,files_paths))
-        # print(req_files)
-        requirements = list(map(read_file,req_files))
-        print(requirements)
-        # requirements_files = map(filter_requirements_files,files_paths)
+        print(req_files)
+        requirement = []
+        data = read_file(req_files[1])
+        print(data)
+        # for f in req_files:
+        #     requirement.append(read_file(f))
+        
+        # print(requirement)
+        # requirements = list(map(read_file,req_files))
+        # print(requirements[1])
+        # packages = list(map(read_packages,requirements))
+        # print(packages)
         print("THIS IS FOLDER")
 
     else:
