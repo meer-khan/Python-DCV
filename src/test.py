@@ -27,8 +27,8 @@ def read_file(file_path):
 
 # Example usage
 file_path = 'D:\\2022\\Python-DCV\\test_data\\test_directory_1\\src\\requirements_2.txt'
-file_content = read_file(file_path)
-print(file_content)
+# file_content = read_file(file_path)
+# print(file_content)
 
 
 # def read_packages(data):
@@ -38,11 +38,11 @@ print(file_content)
 #     return packages
 
 # data1 = read_file(r"D:\2022\Python-DCV\test_data\requirements_2.txt")
-data2 = read_file(r"D:\\2022\\Python-DCV\\test_data\\test_directory_1\\src\\requirements_2.txt")
-print(data2)
+# data2 = read_file(r"D:\\2022\\Python-DCV\\test_data\\test_directory_1\\src\\requirements_2.txt")
+# print(data2)
 
-print(type(data2))
-print("REPRRR******************8")
+# print(type(data2))
+# print("REPRRR******************8")
 # print(repr(data1))
 # print(repr(data2))
 
@@ -54,3 +54,17 @@ print("REPRRR******************8")
 
 # packages = read_packages(data)
 # print(packages)
+
+
+
+print(15324**0.5)
+print(123**2)
+print(15324- 15129)
+print("************")
+print(195**0.5)
+print(13**2)
+print(195- 169)
+print("************")
+print(26**0.5)
+print(5**2)
+print(26- 25)

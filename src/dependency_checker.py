@@ -8,6 +8,15 @@ import chardet
 # from decouple import config
 packages = []
 
+import sys
+# curr_dir = pathlib.Path(__file__).parent.resolve()
+# sys.path.append(curr_dir)
+sys.path.append("..")
+print("PATH***************8")
+# print(pathlib.Path(__file__).parent.resolve())
+
+from DC import dependency_checker
+
 # ANSI
 # UTF-16 LE
 # UTF-16 BE
@@ -39,7 +48,6 @@ def read_file_legacy(file:str)-> str:
 
             continue
     
-    # TODO: Log -C- File cannot be read using above encodings
         # print(data)
         # print(type(data))
 
@@ -68,6 +76,8 @@ def read_file(file_path):
             content = file.read()
         return content
     else:
+        # TODO: Log -C- File cannot be read using above encodings
+
         print(f"Low confidence in detected encoding ({confidence}). Manual inspection may be needed.")
 
 def generate_unique_name(file_name:str)-> str:
