@@ -4,6 +4,7 @@ import pathlib
 from typing import Tuple, List
 import zipfile
 import uuid
+import chardet
 # from decouple import config
 packages = []
 
@@ -13,7 +14,7 @@ packages = []
 # UTF-8 
 # UTF-8 with BOM
 # GIT or maybe VSCode changes the encoding of requirements file so I have added all encodings if one fails other will apply
-def read_file(file:str)-> str:
+def read_file_legacy(file:str)-> str:
     '''
     Description: 
         Read the file with appropriate encoding
@@ -41,6 +42,33 @@ def read_file(file:str)-> str:
     # TODO: Log -C- File cannot be read using above encodings
         # print(data)
         # print(type(data))
+
+
+def read_file(file_path):
+    '''
+    Description: 
+        Read the file with appropriate encoding
+
+    Params: 
+        file: path of the file
+
+    Return:
+        returns the content of file is string format
+    '''
+    # Detect the encoding of the file
+    with open(file_path, 'rb') as file:
+        result = chardet.detect(file.read())
+
+    # Use the detected encoding to read the file
+    encoding = result['encoding']
+    confidence = result['confidence']
+
+    if confidence > 0.5:  # You can adjust the confidence threshold as needed
+        with open(file_path, 'r', encoding=encoding) as file:
+            content = file.read()
+        return content
+    else:
+        print(f"Low confidence in detected encoding ({confidence}). Manual inspection may be needed.")
 
 def generate_unique_name(file_name:str)-> str:
     return file_name +  str(uuid.uuid4) 
@@ -124,17 +152,17 @@ def aggregator(input):
         # print(files_paths)
         req_files = list(filter(filter_requirements_files,files_paths))
         print(req_files)
-        requirement = []
-        data = read_file(req_files[1])
-        print(data)
+        # requirement = []
+        # data = read_file(req_files[1])
+        # print(data)
         # for f in req_files:
         #     requirement.append(read_file(f))
         
         # print(requirement)
-        # requirements = list(map(read_file,req_files))
-        # print(requirements[1])
-        # packages = list(map(read_packages,requirements))
-        # print(packages)
+        requirements = list(map(read_file,req_files))
+        # print(requirements)
+        packages = list(map(read_packages,requirements))
+        print(packages)
         print("THIS IS FOLDER")
 
     else:
