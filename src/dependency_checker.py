@@ -6,14 +6,13 @@ import zipfile
 import uuid
 import chardet
 # from decouple import config
-packages = []
+# packages = []
 
 import sys
 # curr_dir = pathlib.Path(__file__).parent.resolve()
 # sys.path.append(curr_dir)
 sys.path.append("..")
 # print(sys.path)
-print("PATH***************8")
 # print(pathlib.Path(__file__).parent.resolve())
 import DC.dependency_checker
 # from DC import dependency_checker
@@ -118,6 +117,16 @@ def check_type(upload) -> bool:
 
 
 def get_name_n_extension(path:str) -> Tuple[str,str]: 
+    '''
+    Description: 
+        Checks name and extension of file from file path
+
+    Params: 
+        path: file path
+
+    Return:
+        returns tuple of name and extension
+    '''
     return pathlib.Path(path).stem, pathlib.Path(path).suffix
     
 
@@ -174,7 +183,7 @@ def aggregator(input):
         # print(requirements)
         packages = list(map(read_packages,requirements))
         print(packages)
-        print("THIS IS FOLDER")
+        # print("THIS IS FOLDER")
 
     else:
         print("THIS IS ZIP FILE")
