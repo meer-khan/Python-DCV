@@ -15,6 +15,7 @@ sys.path.append("..")
 # print(sys.path)
 # print(pathlib.Path(__file__).parent.resolve())
 import DC.dependency_checker
+import DE.dependency_extractor
 # from DC import dependency_checker
 
 # ANSI
