@@ -41,6 +41,17 @@ def read_file(file_path):
     return content
 
 
+def extract_from_single_import(content):
+    full_statement = re.compile("^import\s+\w+\s*,\s*\w+", re.MULTILINE)
+    full_sat_matches = full_statement.findall(content)
+    print("multi Imports Full Sat: ", full_sat_matches)
+
+    # Get groups
+    pattern = re.compile(r"^import\s+(\w+)\s*,\s*(\w+)", re.MULTILINE)
+    matches = pattern.findall(content)
+    print("Matches: ", matches)
+
+
 def extract_multiple_imports(content):
     # Get Complete Statement
     full_statement = re.compile("^import\s+\w+\s*,\s*\w+", re.MULTILINE)
