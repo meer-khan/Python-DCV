@@ -1,6 +1,6 @@
 import re, os ,pathlib, sys
 curr_path = os.path.dirname(__file__)
-print(curr_path)
+# print(curr_path)
 print(curr_path := os.path.join(curr_path,"..", "DC"))
 sys.path.append(curr_path)
 import dependency_checker
@@ -13,9 +13,9 @@ import dependency_checker
 import ast
 
 '''
-1. Extract single imports e.g. import pandas 
-2. Extract single imports with alias e.g. import pandas as pd 
-3. Extract multiple imports e.g. import os, sys
+1. Extract single imports e.g. import pandas - #*Done
+2. Extract single imports with alias e.g. import pandas as pd - #*Done
+3. Extract multiple imports e.g. import os, sys - #*Done
 4. Extract from single import e.g. from pandas import read_csv
     4.1 Extract package name e.g. pandas
     4.2 Extract function/class/module used by from import e.g. read_csv 
@@ -40,11 +40,29 @@ def read_file(file_path):
     
     return content
 
-def extract_single_imports_with_alias(content): 
-    pattern = re.compile(r"^import\s+(\w+)\s+as\s+(\w+)" , re.MULTILINE)
-    print(pattern)
+
+def extract_multiple_imports(content):
+    # Get Complete Statement
+    full_statement = re.compile("^import\s+\w+\s*,\s*\w+", re.MULTILINE)
+    full_sat_matches = full_statement.findall(content)
+    print("multi Imports Full Sat: ", full_sat_matches)
+
+    # Get groups
+    pattern = re.compile(r"^import\s+(\w+)\s*,\s*(\w+)", re.MULTILINE)
     matches = pattern.findall(content)
-    print(matches)
+    print("Matches: ", matches)
+
+def extract_single_imports_with_alias(content): 
+    # Get complete statement
+    full_statement = re.compile(r"^import\s+\w+\s+as\s+\w+", re.MULTILINE)
+    full_sta_matches = full_statement.findall(content) 
+    print("Full Statement Match: ",full_sta_matches)
+    # Get groups
+    pattern = re.compile(r"^import\s+(\w+)\s+as\s+(\w+)" , re.MULTILINE)
+    matches = pattern.findall(content)
+    package_module = [{"package":pack, "module":mod}for pack, mod in matches]
+    print("Group Matches: ",matches)
+    print("Package and Module: ",package_module)
 
 
 # COMPLETED
@@ -61,8 +79,8 @@ def extract_single_imports(content):
 # Example usage:
 file_path = r"D:\2022\Python-DCV\test_data\test_directory_1\src\imports.py"
 content = read_file(file_path)
-# print(content)
-imports = extract_single_imports(content)
+print(content)
+imports = extract_multiple_imports(content)
 # print(imports)
 
 

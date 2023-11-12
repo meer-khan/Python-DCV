@@ -1,11 +1,14 @@
 import sys
 import re
 import pathlib ,os
+import pandas as pd 
+
 from fastapi import FastAPI, Depends, Response, status
 from typing import Union
 from typing_extensions import Annotated
 from dotenv import load_dotenv
 from pydantic import BaseModel
+import math as m
 from fastapi.middleware.cors import CORSMiddleware
 from spdx_tools.common.spdx_licensing import spdx_licensing
 from spdx_tools.spdx.model import (
