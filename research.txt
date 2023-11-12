@@ -28,3 +28,4 @@ Follow best practices
     7. Create Fast API of it 
     8. NginX and Guicorn for FastAPI
     9. create a package of it 
+    10. Create web site of it 
