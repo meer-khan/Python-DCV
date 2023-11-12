@@ -11,12 +11,24 @@ import chardet
 import sys
 # curr_dir = pathlib.Path(__file__).parent.resolve()
 # sys.path.append(curr_dir)
-sys.path.append("..")
+# sys.path.append("..")
 # print(sys.path)
 # print(pathlib.Path(__file__).parent.resolve())
-import DC.dependency_checker
-import DE.dependency_extractor
+# import DC.dependency_checker
+# import DE.dependency_extractor
 # from DC import dependency_checker
+
+
+
+curr_path = os.path.dirname(__file__)
+print(curr_path_DE := os.path.join(curr_path,"..", "DE"))
+print(curr_path_DC := os.path.join(curr_path,"..", "DC"))
+print(curr_path_common := os.path.join(curr_path,"..", "common"))
+
+sys.path.extend([curr_path_DE, curr_path_DC, curr_path_common])
+
+import dependency_checker, dependency_extractor, filter_file
+
 
 # ANSI
 # UTF-16 LE
@@ -156,8 +168,8 @@ def parse_files(path:str) -> Tuple[List[int], List[int]]:
     return file_paths,file_names
 
 
-def filter_requirements_files(filePath) -> bool: 
-    return True if pathlib.Path(filePath).suffix == '.txt' and ("requirements" or "requirement") in pathlib.Path(filePath).stem.lower()  else False
+# def filter_requirements_files(filePath) -> bool: 
+#     return True if pathlib.Path(filePath).suffix == '.txt' and ("requirements" or "requirement") in pathlib.Path(filePath).stem.lower()  else False
     
 
 def read_packages(data):
@@ -170,21 +182,12 @@ def aggregator(input):
     if check_type(input):
         paths, names = parse_files(input)
         files_paths = list(map(get_files_paths,paths,names))
-        # print(files_paths)
-        req_files = list(filter(filter_requirements_files,files_paths))
+        req_files = list(filter(filter_file.filter_requirements_files,files_paths))
         print(req_files)
-        # requirement = []
-        # data = read_file(req_files[1])
-        # print(data)
-        # for f in req_files:
-        #     requirement.append(read_file(f))
-        
-        # print(requirement)
         requirements = list(map(read_file,req_files))
-        # print(requirements)
         packages = list(map(read_packages,requirements))
         print(packages)
-        # print("THIS IS FOLDER")
+        # ab = 
 
     else:
         print("THIS IS ZIP FILE")
@@ -194,3 +197,4 @@ def aggregator(input):
 if __name__ == "__main__":
     input = r"D:\2022\Python-DCV\test_data\test_directory_1"
     aggregator(input)
+    

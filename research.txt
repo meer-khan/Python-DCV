@@ -22,8 +22,9 @@ Follow best practices
     1. write envs 
     2. write doc string and type hinting 
     3. Create a CLI of it and exe
-    4. Write Pytest , testcases
-    5. Logging
-    6. Create Fast API of it 
-    7. NginX and Guicorn for FastAPI
-    8. create a package of it 
+    4. Async at dependency checker and dependency extractors
+    5. Write Pytest , testcases
+    6. Logging
+    7. Create Fast API of it 
+    8. NginX and Guicorn for FastAPI
+    9. create a package of it 
