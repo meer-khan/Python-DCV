@@ -6,7 +6,6 @@ sys.path.append(curr_path)
 import dependency_checker
 
 
-
 # def extract_imports(data:str):
 #     pattern = re.Pattern()
 #     pass
@@ -33,6 +32,47 @@ import ast
 '''
 
 import re
+
+
+def read_file(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        content = file.read()
+    
+    return content
+
+def extract_single_imports_with_alias(content): 
+    pattern = re.compile(r"^import\s+(\w+)\s+as\s+(\w+)" , re.MULTILINE)
+    print(pattern)
+    matches = pattern.findall(content)
+    print(matches)
+
+
+# COMPLETED
+def extract_single_imports(content): 
+    import_pattern = re.compile(r"^import\s+\w+$" , re.MULTILINE)
+    import_matches = import_pattern.findall(content)
+
+    fun_pattern = re.compile(r"^import\s+(\w+)$" , re.MULTILINE)
+    print(fun_pattern)
+    fun_matches = fun_pattern.findall(content)
+    print("Matches:  ",fun_matches , "\nImport Patterns: ", import_matches)
+
+
+# Example usage:
+file_path = r"D:\2022\Python-DCV\test_data\test_directory_1\src\imports.py"
+content = read_file(file_path)
+# print(content)
+imports = extract_single_imports(content)
+# print(imports)
+
+
+
+
+
+
+
+
+
 
 def extract_imports_re(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -76,10 +116,6 @@ def extract_imports(file_path):
 
     return import_statements
 
-# Example usage:
-file_path = r"D:\2022\Python-DCV\test_data\test_directory_1\src\imports.py"
-imports = extract_imports_re(file_path)
-print(imports)
 
 
 
