@@ -22,10 +22,10 @@ import ast
 5. Extract from multiple import e.g. from pandas import read_csv, DataFrame, to_csv   #TODO: ^from\s+(\w+)\s+import\s+\w+\s*,.*$
     5.1 Extract package name e.g. pandas  #TODO:above regex will extract package name as group
     # 5.1 Extract function/class/module used by from import e.g. read_csv, DataFrame, to_csv seperate them out # TODO: do it using , seperator
-6. Extract from multi package multi class e.g. from flaskapi.sqlalchemy.request import sqlalchemy_request  #TODO: ^from\s+\w+\.[\w\s\.]+
+6. Extract from multi package multi class e.g. from flaskapi.sqlalchemy.request import sqlalchemy_request  #TODO: ^from\s+\w+\.[\w\s\.]+$
 7. Extract bracket/multiline import e.g. 
                             from pandas import (read_csv, DataFrame
-                                                to_csv)
+                                                to_csv) #TODO: ^import\s+\([\w,\s]+\)$
 8. Extract brackets/multiline import e.g. import (os,sys,
                                                     pathlib, re)
 
