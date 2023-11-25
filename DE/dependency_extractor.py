@@ -42,7 +42,12 @@ def read_file(file_path):
     return content
 
 
-
+def import_extractor(regex, content): 
+    pattern = re.compile(regex, re.MULTILINE)
+    matches = pattern.findall(content)
+    print("multi Imports Full Sat: ", matches)
+    return matches
+    
 
 def extract_from_single_import(content):
     full_statement = re.compile("^import\s+\w+\s*,\s*\w+", re.MULTILINE)
