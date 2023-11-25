@@ -25,7 +25,7 @@ import ast
 6. Extract from multi package multi class e.g. from flaskapi.sqlalchemy.request import sqlalchemy_request  #TODO: ^from\s+\w+\.[\w\s\.]+$
 7. Extract bracket/multiline import e.g. 
                             from pandas import (read_csv, DataFrame
-                                                to_csv) #TODO: ^from\s+\w+[\w\.]+\simport\s+\([\w,\s]+\)
+                                                to_csv) #TODO: ^from\s+\w+[\w\.]+\s+import\s+\([\w,\s]+\)
 8. Extract brackets/multiline import e.g. import (os,sys,
                                                     pathlib, re) #TODO: ^import\s+\([\w,\s]+\)$
 
@@ -40,6 +40,8 @@ def read_file(file_path):
         content = file.read()
     
     return content
+
+
 
 
 def extract_from_single_import(content):
