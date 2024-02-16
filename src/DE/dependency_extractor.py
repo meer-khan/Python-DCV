@@ -6,10 +6,6 @@ sys.path.append(curr_path)
 import dependency_checker
 
 
-# def extract_imports(data:str):
-#     pattern = re.Pattern()
-#     pass
-
 import ast
 
 '''
