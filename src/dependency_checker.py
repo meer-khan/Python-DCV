@@ -5,6 +5,7 @@ from typing import Tuple, List
 import zipfile
 import uuid
 import chardet
+from icecream import ic
 # from decouple import config
 # packages = []
 
@@ -27,7 +28,7 @@ print(curr_path_common := os.path.join(curr_path,"..", "common"))
 
 sys.path.extend([curr_path_DE, curr_path_DC, curr_path_common])
 
-import dependency_checker, dependency_extractor, filter_file
+# import dependency_checker, dependency_extractor, filter_file
 
 
 # ANSI
@@ -183,14 +184,14 @@ def aggregator(input):
         paths, names = parse_files(input)
         files_paths = list(map(get_files_paths,paths,names))
         req_files = list(filter(filter_file.filter_requirements_files,files_paths))
-        print(req_files)
+        ic(req_files)
         requirements = list(map(read_file,req_files))
         packages = list(map(read_packages,requirements))
-        print(packages)
+        ic(packages)
         # ab = 
 
     else:
-        print("THIS IS ZIP FILE")
+        ic("THIS IS ZIP FILE")
 
 
 
