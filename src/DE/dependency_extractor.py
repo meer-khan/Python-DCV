@@ -18,11 +18,16 @@ import ast
 5. Extract from multiple import e.g. from pandas import read_csv, DataFrame, to_csv   #TODO: ^from\s+(\w+)\s+import\s+(\w+\s*,.*)$
     5.1 Extract package name e.g. pandas  #TODO:above regex will extract package name as group
     # 5.1 Extract function/class/module used by from import e.g. read_csv, DataFrame, to_csv seperate them out # TODO: do it using , seperator
-6. Extract from multi package multi class e.g. from flaskapi.sqlalchemy.request import sqlalchemy_request  #TODO: ^from\s+\w+\.[\w\s\.]+$
-7. Extract bracket/multiline import e.g. 
+6. Extract from multi package single class e.g. from flaskapi.sqlalchemy.request import sqlalchemy_request  #TODO: ^from\s+\w+\.[\w\s\.]+$
+7. Extract from multi package multi class e.g. from flaskapi.sqlalchemy.request import sqlalchemy_request, sqlalchemy_response #TODO:
+8. Extract bracket/multiline import e.g. 
                             from pandas import (read_csv, DataFrame
                                                 to_csv) #TODO: ^from\s+\w+[\w\.]+\s+import\s+\([\w,\s]+\)
-8. Extract brackets/multiline import e.g. import (os,sys,
+9. Extract from multi package multi class bracket/multiline 
+                            e.g. from flaskapi.sqlalchemy.request import (sqlalchemy_request, 
+                                                                            sqlalchemy_response) #TODO
+
+10. Extract brackets/multiline import e.g. import (os,sys,
                                                     pathlib, re) #TODO: ^import\s+\([\w,\s]+\)$
 
 
@@ -54,7 +59,7 @@ def extract_from_multiple_imports(content):
     extract_data = {"lib": matches[0][0] , "fun": funs }
     ic(extract_data)
 
-
+# COMPLETE
 def extract_from_single_import(content):
     full_statement = re.compile(r"^from\s+(\w+)\s+import\s+(\w+)$", re.MULTILINE)
     full_sat_matches = full_statement.findall(content)
@@ -64,7 +69,7 @@ def extract_from_single_import(content):
     extract_data = [{"package":tup[0], "fun":tup[1]} for tup in full_sat_matches]
     ic(extract_data)
 
-
+# COMPLETE
 def extract_multiple_imports(content):
     # Get Complete Statement
     full_statement = re.compile("^import\s+\w+\s*,\s*\w+", re.MULTILINE)
@@ -76,6 +81,7 @@ def extract_multiple_imports(content):
     matches = pattern.findall(content)
     ic(matches)
 
+# COMPLETE
 def extract_single_imports_with_alias(content): 
     # Get complete statement
     full_statement = re.compile(r"^import\s+\w+\s+as\s+\w+", re.MULTILINE)
