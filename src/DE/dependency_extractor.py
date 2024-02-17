@@ -4,7 +4,7 @@ curr_path = os.path.dirname(__file__)
 print(curr_path := os.path.join(curr_path,"..", "DC"))
 sys.path.append(curr_path)
 import dependency_checker
-
+from icecream import ic
 
 import ast
 
@@ -15,7 +15,7 @@ import ast
 4. Extract from single import e.g. from pandas import read_csv  # TODO: ^from\s+(\w+)\s+import\s+(\w+)$
     4.1 Extract package name e.g. pandas
     4.2 Extract function/class/module used by from import e.g. read_csv 
-5. Extract from multiple import e.g. from pandas import read_csv, DataFrame, to_csv   #TODO: ^from\s+(\w+)\s+import\s+\w+\s*,.*$
+5. Extract from multiple import e.g. from pandas import read_csv, DataFrame, to_csv   #TODO: ^from\s+(\w+)\s+import\s+(\w+\s*,.*)$
     5.1 Extract package name e.g. pandas  #TODO:above regex will extract package name as group
     # 5.1 Extract function/class/module used by from import e.g. read_csv, DataFrame, to_csv seperate them out # TODO: do it using , seperator
 6. Extract from multi package multi class e.g. from flaskapi.sqlalchemy.request import sqlalchemy_request  #TODO: ^from\s+\w+\.[\w\s\.]+$
@@ -41,43 +41,52 @@ def read_file(file_path):
 def import_extractor(regex, content): 
     pattern = re.compile(regex, re.MULTILINE)
     matches = pattern.findall(content)
-    print("multi Imports Full Sat: ", matches)
+    # print("multi Imports Full Sat: ", matches)
     return matches
     
 
+# COMPLETE
+def extract_from_multiple_imports(content):
+    matches = import_extractor(r"^from\s+(\w+)\s+import\s+(\w+\s*,.*)$", content)    
+    ic(matches)
+    funs = matches[0][1].split(",")
+    ic(funs)
+    extract_data = {"lib": matches[0][0] , "fun": funs }
+    ic(extract_data)
+
+
 def extract_from_single_import(content):
-    full_statement = re.compile("^import\s+\w+\s*,\s*\w+", re.MULTILINE)
+    full_statement = re.compile(r"^from\s+(\w+)\s+import\s+(\w+)$", re.MULTILINE)
     full_sat_matches = full_statement.findall(content)
-    print("multi Imports Full Sat: ", full_sat_matches)
+    ic(full_sat_matches)
 
     # Get groups
-    pattern = re.compile(r"^import\s+(\w+)\s*,\s*(\w+)", re.MULTILINE)
-    matches = pattern.findall(content)
-    print("Matches: ", matches)
+    extract_data = [{"package":tup[0], "fun":tup[1]} for tup in full_sat_matches]
+    ic(extract_data)
 
 
 def extract_multiple_imports(content):
     # Get Complete Statement
     full_statement = re.compile("^import\s+\w+\s*,\s*\w+", re.MULTILINE)
     full_sat_matches = full_statement.findall(content)
-    print("multi Imports Full Sat: ", full_sat_matches)
+    ic(full_sat_matches)
 
     # Get groups
     pattern = re.compile(r"^import\s+(\w+)\s*,\s*(\w+)", re.MULTILINE)
     matches = pattern.findall(content)
-    print("Matches: ", matches)
+    ic(matches)
 
 def extract_single_imports_with_alias(content): 
     # Get complete statement
     full_statement = re.compile(r"^import\s+\w+\s+as\s+\w+", re.MULTILINE)
     full_sta_matches = full_statement.findall(content) 
-    print("Full Statement Match: ",full_sta_matches)
+    ic(full_sta_matches)
     # Get groups
     pattern = re.compile(r"^import\s+(\w+)\s+as\s+(\w+)" , re.MULTILINE)
     matches = pattern.findall(content)
-    package_module = [{"package":pack, "module":mod}for pack, mod in matches]
-    print("Group Matches: ",matches)
-    print("Package and Module: ",package_module)
+    package_module = [{"package":pack, "alias":mod}for pack, mod in matches]
+    ic(matches)
+    ic(package_module)
 
 
 # COMPLETED
@@ -86,16 +95,16 @@ def extract_single_imports(content):
     import_matches = import_pattern.findall(content)
 
     fun_pattern = re.compile(r"^import\s+(\w+)$" , re.MULTILINE)
-    print(fun_pattern)
     fun_matches = fun_pattern.findall(content)
-    print("Matches:  ",fun_matches , "\nImport Patterns: ", import_matches)
+    ic(fun_matches, import_matches)
 
 
 # Example usage:
 file_path = r"D:\2022\Python-DCV\test_data\test_directory_1\src\imports.py"
 content = read_file(file_path)
-print(content)
-imports = extract_multiple_imports(content)
+# print(content)
+# imports = extract_multiple_imports(content)
+extract_from_multiple_imports(content)
 # print(imports)
 
 
