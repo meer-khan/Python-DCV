@@ -13,6 +13,7 @@ useful package for vulnerability detection
 https://securityguide.github.io/webapps/tools/python-tools/python-dependency-checker.htmlhttps://securityguide.github.io/webapps/tools/python-tools/python-dependency-checker.html
 
 ________________________________________________________
+# https://stackoverflow.com/questions/46330327/how-are-pipfile-and-pipfile-lock-used
 
 TEST CASES: 
     1. File with name "Requirements" , "Requirement", "requirements", and "requirement"
