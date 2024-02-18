@@ -26,15 +26,16 @@ import ast
 9. Extract from multi package multi class bracket/multiline 
                             e.g. from flaskapi.sqlalchemy.request import (sqlalchemy_request, 
                                                                             sqlalchemy_response) #TODO ^from\s+(\w+[\w\.]+)\s+import\s+\(([\w,\s]+)\)$
-10. Extract brackets/multiline import e.g. import (os,sys,
-                                                    pathlib, re) #TODO: ^import\s+\(([\w,\s]+)\)$
+10.  Extract brackets/multiline import e.g. import (os,sys, #!THIS SYNTAX DOES NOT EXISTS in PYTHON
+                                                    pathlib, re) #TODO: ^import\s+\(([\w,\s]+)\)$ 
 
-11. import single class with dot import fastapi.api
-12. from single package single class with dot from fastapi import  fastapi.api.response 
+11. import single class with dot e.g. import fastapi.api #TODO: ^import\s+(\w+\.[\w.+]+)$
+12. from single package single class with dot from fastapi import  fastapi.api.response  #!THIS SYNTAX DOES NOT EXISTS in PYTHON
 
 '''
 
 import re
+import os.path
 
 
 def read_file(file_path):
