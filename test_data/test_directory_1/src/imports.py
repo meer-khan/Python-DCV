@@ -11,6 +11,7 @@ from pydantic import BaseModel
 import math as m
 from fastapi.middleware.cors import CORSMiddleware
 from spdx_tools.common.spdx_licensing import spdx_licensing
+from flaskapi.sqlalchemy.request import sqlalchemy_request, sqlalchemy_response
 from spdx_tools.spdx.model import (
     Actor,
     ActorType,

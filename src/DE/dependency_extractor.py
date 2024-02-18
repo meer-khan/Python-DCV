@@ -54,7 +54,9 @@ def import_extractor(regex, content):
 
 def extract_from_multi_package_multi_class(content): 
     matches = import_extractor(r"^^from\s+(\w+\.[\w\.]+)\s+import\s+(\w+,\s*[\w\s,]+)$", content)
-    ic(matches)
+    funs = matches[0][1].split(",")
+    extract_data = {"lib": matches[0][0] , "fun": funs }
+    ic(extract_data)
 
 
 
