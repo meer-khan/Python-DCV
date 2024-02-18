@@ -52,7 +52,12 @@ def import_extractor(regex, content):
     return matches
     
 
+    
 
+# COMPLETE - 6
+def extract_from_multi_package_single_class(content):
+    matches = import_extractor(r"^from\s+(\w+\.[\w\.]+)\s+import\s+(\w+)$", content)
+    ic(matches)
 
 # COMPLETE - 5
 def extract_from_multiple_imports(content):
@@ -114,7 +119,7 @@ file_path = r"D:\2022\Python-DCV\test_data\test_directory_1\src\imports.py"
 content = read_file(file_path)
 # print(content)
 # imports = extract_multiple_imports(content)
-extract_from_multiple_imports(content)
+extract_from_multi_package_single_class(content)
 # print(imports)
 
 
