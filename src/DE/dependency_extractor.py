@@ -19,10 +19,10 @@ import ast
     5.1 Extract package name e.g. pandas  #TODO:above regex will extract package name as group
     # 5.1 Extract function/class/module used by from import e.g. read_csv, DataFrame, to_csv seperate them out # TODO: do it using , seperator
 6. Extract from multi package single class e.g. from flaskapi.sqlalchemy.request import sqlalchemy_request  #TODO: ^from\s+(\w+\.[\w\.]+)\s+import\s+(\w+)$ - 
-7. Extract from multi package multi class e.g. from flaskapi.sqlalchemy.request import sqlalchemy_request, sqlalchemy_response #TODO:REVISED : ^from\s+(\w+\.[\w\.]+)\s+import\s+(\w+,\s*[\w\s,]+)$ - Extract after comman splitting
+7. Extract from multi package multi class e.g. from flaskapi.sqlalchemy.request import sqlalchemy_request, sqlalchemy_response #TODO:REVISED : ^from\s+(\w+\.[\w\.]+)\s+import\s+(\w+,\s*[\w\s,]+)$ - Extract after comma splitting
 8. Extract bracket/multiline import e.g. 
                             from pandas import (read_csv, DataFrame
-                                                to_csv) #TODO: ^from\s+\w+[\w\.]+\s+import\s+\([\w,\s]+\) - REVISED: ^from\s+(\w+[\w\.]+)\s+import\s+\(([\w,\s]+)\)$
+                                                to_csv) #TODO: ^from\s+\w+[\w\.]+\s+import\s+\([\w,\s]+\) - REVISED: ^from\s+(\w+)\s+import\s+\(([\w,\s]+)\)$
 9. Extract from multi package multi class bracket/multiline 
                             e.g. from flaskapi.sqlalchemy.request import (sqlalchemy_request, 
                                                                             sqlalchemy_response) #TODO ^from\s+(\w+[\w\.]+)\s+import\s+\(([\w,\s]+)\)$
@@ -51,7 +51,13 @@ def import_extractor(regex, content):
     # print("multi Imports Full Sat: ", matches)
     return matches
     
+def extract_bracket_import(content): 
+    matches = import_extractor(r"^from\s+(\w+)\s+import\s+\(([\w,\s]+)\)$", content)
+    ic(matches)
+    result = [{"lib":i[0], "funs":i[1].split(",")} for i in matches]
+    ic(result)
 
+# COMPLETE - 7
 def extract_from_multi_package_multi_class(content): 
     matches = import_extractor(r"^^from\s+(\w+\.[\w\.]+)\s+import\s+(\w+,\s*[\w\s,]+)$", content)
     funs = matches[0][1].split(",")
@@ -125,7 +131,7 @@ file_path = r"D:\2022\Python-DCV\test_data\test_directory_1\src\imports.py"
 content = read_file(file_path)
 # print(content)
 # imports = extract_multiple_imports(content)
-extract_from_multi_package_multi_class(content)
+extract_bracket_import(content)
 # print(imports)
 
 
